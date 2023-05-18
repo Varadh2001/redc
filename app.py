@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pydicom
 import os
-
+from network import RED_CNN
 
 # Define the preprocessing functions
 
