@@ -8,10 +8,9 @@ import os
 
 # Define the preprocessing functions
 
-
-def load_scan(path):
+def load_scan(file):
     try:
-        dcm_file = pydicom.filereader.dcmread(path, force=True)
+        dcm_file = pydicom.filereader.dcmread(file, force=True)
     except pydicom.errors.InvalidDicomError:
         raise ValueError("Invalid DICOM file format. Only .ima files are supported.")
 
@@ -19,7 +18,6 @@ def load_scan(path):
     slice_thickness = slices[0].SliceThickness
 
     return slices, slice_thickness
-
 
 
 
@@ -89,8 +87,7 @@ def main():
 
     if ima_file is not None:
         # Read the IMA files
-        path = os.path.dirname(ima_file.name)
-        slices = load_scan(path)
+        slices = load_scan(ima_file)
         low_dose_image = get_pixels_hu(slices)
         low_dose_image = normalize_(low_dose_image)
 
