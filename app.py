@@ -14,26 +14,22 @@ def load_scan(file):
     except pydicom.errors.InvalidDicomError:
         raise ValueError("Invalid DICOM file format. Only .ima files are supported.")
 
-    slices = [dcm_file]
-    slice_thickness = slices[0].SliceThickness
+    slice_thickness = dcm_file.SliceThickness
 
-    return slices, slice_thickness
-
+    return dcm_file, slice_thickness
 
 
 def get_pixels_hu(slices):
-    image = np.stack([s.pixel_array for s in slices])
+    image = slices.pixel_array
     image = image.astype(np.int16)
     image[image == -2000] = 0
-    for slice_number in range(len(slices)):
-        intercept = slices[slice_number].RescaleIntercept
-        slope = slices[slice_number].RescaleSlope
-        if slope != 1:
-            image[slice_number] = slope * image[slice_number].astype(np.float64)
-            image[slice_number] = image[slice_number].astype(np.int16)
-        image[slice_number] += np.int16(intercept)
+    intercept = slices.RescaleIntercept
+    slope = slices.RescaleSlope
+    if slope != 1:
+        image = slope * image.astype(np.float64)
+        image = image.astype(np.int16)
+    image += np.int16(intercept)
     return np.array(image, dtype=np.int16)
-
 
 def normalize_(image, MIN_B=-1024.0, MAX_B=3072.0):
     image = (image - MIN_B) / (MAX_B - MIN_B)
@@ -78,7 +74,6 @@ def denoise_ct_image(low_dose_image, brightness_factor, model_path):
 
     return denoised_image
 
-
 def main():
     st.title("CT Image Denoising")
 
@@ -86,8 +81,8 @@ def main():
     ima_file = st.file_uploader("Upload Low Dose CT Image (IMA)", type="ima")
 
     if ima_file is not None:
-        # Read the IMA files
-        slices = load_scan(ima_file)
+        # Read the IMA file
+        slices, slice_thickness = load_scan(ima_file)
         low_dose_image = get_pixels_hu(slices)
         low_dose_image = normalize_(low_dose_image)
 
