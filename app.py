@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import pydicom
 import os
 from network import RED_CNN
-
+device = torch.device('cpu')
 # Define the preprocessing functions
 
 def load_scan(file):
