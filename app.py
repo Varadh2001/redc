@@ -41,7 +41,6 @@ def adjust_brightness(image, brightness_factor):
     image = np.clip(image, 0.0, 1.0)
     return image
 
-
 def denoise_ct_image(low_dose_image, brightness_factor, model_path):
     # Load the pre-trained model
     model = RED_CNN(out_ch=96)
@@ -60,8 +59,8 @@ def denoise_ct_image(low_dose_image, brightness_factor, model_path):
         low_dose_image_tensor = torch.from_numpy(low_dose_image).unsqueeze(0).unsqueeze(0)
         low_dose_image_tensor = low_dose_image_tensor.to(device)
 
-        # Select a single slice
-        low_dose_image_slice = low_dose_image_tensor[:, :, 9, :, :]
+        # Select the 9th slice
+        low_dose_image_slice = low_dose_image_tensor[:, :, 8, :, :]  # Adjusted indexing
 
         # Convert the input tensor to the same data type as the model's bias
         low_dose_image_slice = low_dose_image_slice.float()
@@ -73,6 +72,7 @@ def denoise_ct_image(low_dose_image, brightness_factor, model_path):
     denoised_image = adjust_brightness(denoised_image, brightness_factor)
 
     return denoised_image
+
 
 def main():
     st.title("CT Image Denoising")
