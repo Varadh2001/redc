@@ -100,7 +100,7 @@ def main():
 
         # Display the results
         st.subheader("Low Dose CT Image")
-        st.image(low_dose_image[9], cmap='gray')
+        st.image(low_dose_image[8], cmap='gray')
 
         st.subheader("Denoised CT Image")
         st.image(denoised_image, cmap='gray')
