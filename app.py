@@ -60,7 +60,7 @@ def denoise_ct_image(low_dose_image, brightness_factor, model_path):
         low_dose_image_tensor = low_dose_image_tensor.to(device)
 
         # Select the 9th slice
-        low_dose_image_slice = low_dose_image_tensor[:, 9, :, :]  # Adjusted indexing
+        low_dose_image_slice = low_dose_image_tensor[:, :, :, :]  # Adjusted indexing
 
         # Convert the input tensor to the same data type as the model's bias
         low_dose_image_slice = low_dose_image_slice.float()
@@ -100,7 +100,7 @@ def main():
 
         # Display the results
         st.subheader("Low Dose CT Image")
-        st.image(low_dose_image[9], cmap='gray')
+        st.image(low_dose_image[:], cmap='gray')
 
         st.subheader("Denoised CT Image")
         st.image(denoised_image, cmap='gray')
