@@ -99,11 +99,15 @@ def main():
         denoised_image = denoise_ct_image(low_dose_image, brightness_factor, model_path)
 
         # Display the results
-        st.subheader("Low Dose CT Image")
-        st.image(low_dose_image[:], width=400)
+        st.subheader("Low Dose CT Image and Denoised CT Image")
+        col1, col2 = st.beta_columns(2)
+        with col1:
+            st.subheader("Low Dose CT Image")
+            st.image(low_dose_image, width=500)
 
-        st.subheader("Denoised CT Image")
-        st.image(denoised_image, width=400)
+        with col2:
+            st.subheader("Denoised CT Image")
+            st.image(denoised_image, width=500)
 
 
 if __name__ == "__main__":
