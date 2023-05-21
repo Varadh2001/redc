@@ -100,10 +100,10 @@ def main():
 
         # Display the results
         st.subheader("Low Dose CT Image")
-        st.image(low_dose_image[:], width=100)
+        st.image(low_dose_image[:], width=400)
 
         st.subheader("Denoised CT Image")
-        st.image(denoised_image, width=100)
+        st.image(denoised_image, width=400)
 
 
 if __name__ == "__main__":
