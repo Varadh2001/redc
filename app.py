@@ -43,7 +43,7 @@ def adjust_brightness(image, brightness_factor):
 
 def denoise_ct_image(low_dose_image, brightness_factor, model_path):
     # Load the pre-trained model
-    model = ResNet(out_ch=96)
+    model = ResNet(in_channels=1, out_channels=64, num_blocks=16)
     checkpoint = torch.load(model_path, map_location=torch.device('cpu'))
 
     # Filter out unexpected keys from the checkpoint
