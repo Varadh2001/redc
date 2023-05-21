@@ -103,11 +103,11 @@ def main():
         col1, col2 = st.beta_columns(2)
         with col1:
             st.subheader("Low Dose CT Image")
-            st.image(low_dose_image, width=500)
+            st.image(low_dose_image, width=300)
 
         with col2:
             st.subheader("Denoised CT Image")
-            st.image(denoised_image, width=500)
+            st.image(denoised_image, width=300)
 
 
 if __name__ == "__main__":
