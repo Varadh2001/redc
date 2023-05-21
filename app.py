@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pydicom
 import os
-from network import RED_CNN
+from resnet import ResNet
 device = torch.device('cpu')
 # Define the preprocessing functions
 
@@ -43,7 +43,7 @@ def adjust_brightness(image, brightness_factor):
 
 def denoise_ct_image(low_dose_image, brightness_factor, model_path):
     # Load the pre-trained model
-    model = RED_CNN(out_ch=96)
+    model = ResNet(out_ch=96)
     checkpoint = torch.load(model_path, map_location=torch.device('cpu'))
 
     # Filter out unexpected keys from the checkpoint
@@ -90,7 +90,7 @@ def main():
         device = torch.device('cpu')
 
         # Define model and checkpoint paths
-        model_path = 'REDCNN_90epoch.ckpt'
+        model_path = 'ResNet_86epoch.ckpt'
 
         # Set brightness factor
         brightness_factor = 1.5
