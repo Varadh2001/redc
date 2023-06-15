@@ -90,7 +90,7 @@ def main():
         device = torch.device('cpu')
 
         # Define model and checkpoint paths
-        model_path = 'ResNet_86epoch.ckpt'
+        model_path = 'ResNet_79epoch.ckpt'
 
         # Set brightness factor
         brightness_factor = 1.5
